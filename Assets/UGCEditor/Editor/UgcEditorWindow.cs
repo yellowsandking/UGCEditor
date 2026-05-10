@@ -375,18 +375,24 @@ namespace UGCEditor.Editor
             for (int i = 0; i < program.ops.Count; i++)
             {
                 UgcRenderOp op = program.ops[i];
-                Rect rect = ToStageRect(stage, scale, op.x, op.y, op.width, op.height);
                 if (op.kind == UgcRenderKind.Rect)
                 {
+                    Rect rect = ToStageRect(stage, scale, op.x, op.y, op.width, op.height);
                     EditorGUI.DrawRect(rect, UgcDsl.ParseColor(op.fill, new Color(0.24f, 0.27f, 0.32f)));
                 }
                 else if (op.kind == UgcRenderKind.Text)
                 {
+                    Rect bounds = GetTextBounds(op.x, op.y, op.content, op.fontSize);
+                    Rect rect = ToStageRect(stage, scale, bounds.x, bounds.y, bounds.width, bounds.height);
                     DrawLabel(rect, op.content, op.color, op.fontSize * scale);
                 }
-                else if (GUI.Button(rect, op.label))
+                else
                 {
-                    AddRuntimeLog("action: " + op.actionId + " (\"" + op.label + "\")");
+                    Rect rect = ToStageRect(stage, scale, op.x, op.y, op.width, op.height);
+                    if (GUI.Button(rect, op.label))
+                    {
+                        AddRuntimeLog("action: " + op.actionId + " (\"" + op.label + "\")");
+                    }
                 }
             }
         }
@@ -523,8 +529,13 @@ namespace UGCEditor.Editor
                 return new Rect(node.x, node.y, Mathf.Max(1f, node.width), Mathf.Max(1f, node.height));
             }
 
-            float fontSize = node.fontSize > 0f ? node.fontSize : 16f;
-            string text = node.content ?? "";
+            return GetTextBounds(node.x, node.y, node.content, node.fontSize);
+        }
+
+        private Rect GetTextBounds(float x, float y, string content, float fontSize)
+        {
+            float safeFontSize = fontSize > 0f ? fontSize : 16f;
+            string text = content ?? "";
             string[] lines = text.Split('\n');
             int maxChars = 1;
             for (int i = 0; i < lines.Length; i++)
@@ -532,10 +543,10 @@ namespace UGCEditor.Editor
                 maxChars = Mathf.Max(maxChars, lines[i].Length);
             }
 
-            float availableWidth = Mathf.Max(1f, document.canvas.width - node.x);
-            float width = Mathf.Min(availableWidth, Mathf.Max(48f, maxChars * fontSize * 0.55f));
-            float height = Mathf.Max(1, lines.Length) * fontSize * 1.25f;
-            return new Rect(node.x, node.y, width, height);
+            float availableWidth = Mathf.Max(1f, document.canvas.width - x);
+            float width = Mathf.Min(availableWidth, Mathf.Max(48f, maxChars * safeFontSize * 0.55f));
+            float height = Mathf.Max(1, lines.Length) * safeFontSize * 1.25f;
+            return new Rect(x, y, width, height);
         }
 
         private Vector2 ClampNodePosition(UgcNode node, float x, float y)
