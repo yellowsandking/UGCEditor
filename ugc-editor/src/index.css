@@ -212,6 +212,38 @@ code {
   gap: 16px;
 }
 
+.canvas-preview-title {
+  margin: 16px 0 10px;
+  font-size: 0.9rem;
+}
+
+.editor-canvas-wrap {
+  width: 100%;
+}
+
+.editor-canvas-stage {
+  margin: 0 auto;
+}
+
+.editor-canvas-btn {
+  cursor: grab;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(180deg, #3d4f7a, #2c3a5c);
+  color: var(--text);
+  font-weight: 600;
+  padding: 0;
+}
+
+.editor-canvas-btn:active {
+  cursor: grabbing;
+}
+
+.editor-canvas-hint {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
 .panel h3 {
   margin: 0 0 10px;
   font-size: 0.9rem;
