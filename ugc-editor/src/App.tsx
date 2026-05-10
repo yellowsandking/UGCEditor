@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { compile } from "./compiler/compile";
 import { emptyDocument, type UgcDocument } from "./dsl/types";
 import { parseJsonToDocument, validateDocument } from "./dsl/validator";
@@ -8,12 +8,25 @@ import { VisualEditor } from "./components/VisualEditor";
 
 type StepStatus = "idle" | "ok" | "err";
 
+function downloadJsonFile(filename: string, data: unknown) {
+  const text = JSON.stringify(data, null, 2);
+  const blob = new Blob([text], { type: "application/json;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.rel = "noopener";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function App() {
   const [prompt, setPrompt] = useState("做一个深色背景的欢迎界面，带标题和两个按钮：开始、分享");
   const [doc, setDoc] = useState<UgcDocument>(() => emptyDocument());
   const [jsonText, setJsonText] = useState(() => JSON.stringify(emptyDocument(), null, 2));
   const [generating, setGenerating] = useState(false);
   const [llmNote, setLlmNote] = useState<string | null>(null);
+  const dslSectionRef = useRef<HTMLElement>(null);
 
   const validation = useMemo(() => validateDocument(doc), [doc]);
   const compiled = useMemo(() => {
@@ -45,8 +58,16 @@ export function App() {
     try {
       const next = await generateDslFromPrompt(prompt);
       syncJsonFromDoc(next);
-      const hasKey = Boolean(import.meta.env.VITE_OPENAI_API_KEY);
-      setLlmNote(hasKey ? "已从 LLM 写入 DSL（失败时会回退模板）" : "未配置 VITE_OPENAI_API_KEY，使用本地模板");
+      const hasKey = Boolean(import.meta.env.VITE_OPENAI_API_KEY?.trim());
+      setLlmNote(
+        hasKey
+          ? "已写入下方「② DSL（JSON）」文本框（云端失败时会用本地模板）。不会自动保存到磁盘，需要请点击「下载 JSON 文件」。"
+          : "已写入下方「② DSL（JSON）」文本框（本地模板）。不会自动保存到磁盘，需要请点击「下载 JSON 文件」。"
+      );
+      queueMicrotask(() => dslSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" }));
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : String(e);
+      setLlmNote(`生成失败：${msg}`);
     } finally {
       setGenerating(false);
     }
@@ -102,9 +123,12 @@ export function App() {
           <p className="muted small">
             设置环境变量 <code>VITE_OPENAI_API_KEY</code> 后重启 dev server 可调用真实模型；否则使用启发式模板。
           </p>
+          <p className="muted small">
+            「生成 DSL」只更新页面里的 JSON，不会在项目目录里新建文件；要得到 <code>.json</code> 文件请见右侧「下载 JSON 文件」。
+          </p>
         </section>
 
-        <section className="card stretch">
+        <section className="card stretch" ref={dslSectionRef}>
           <h2>② DSL（JSON）</h2>
           <textarea
             className="json-area"
@@ -118,6 +142,9 @@ export function App() {
             </button>
             <button type="button" onClick={() => setJsonText(JSON.stringify(doc, null, 2))}>
               从左侧文档格式化
+            </button>
+            <button type="button" onClick={() => downloadJsonFile("ugc-scene.json", doc)}>
+              下载 JSON 文件
             </button>
           </div>
           <div className={`validation ${validation.ok ? "ok" : "err"}`}>
