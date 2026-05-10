@@ -1,0 +1,142 @@
+.main-scroll {
+    padding: 12px;
+}
+
+.header {
+    margin-bottom: 8px;
+}
+
+.title {
+    font-size: 18px;
+    -unity-font-style: bold;
+    margin-bottom: 4px;
+}
+
+.subtitle,
+.hint {
+    color: rgb(150, 155, 165);
+}
+
+.card {
+    margin-top: 10px;
+    padding: 12px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    background-color: rgb(31, 34, 42);
+}
+
+.section-title {
+    color: rgb(138, 180, 248);
+    -unity-font-style: bold;
+    margin-bottom: 8px;
+}
+
+.subsection-title {
+    -unity-font-style: bold;
+    margin-top: 10px;
+    margin-bottom: 6px;
+}
+
+.no-margin {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.button-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.button-row > Button {
+    margin-right: 6px;
+}
+
+.no-top-margin {
+    margin-top: 0;
+}
+
+.field-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.field-row > * {
+    min-width: 150px;
+    margin-right: 10px;
+}
+
+.multiline-field {
+    min-height: 64px;
+}
+
+.json-field {
+    min-height: 220px;
+}
+
+.compiled-field {
+    min-height: 140px;
+}
+
+.note-label {
+    margin-top: 8px;
+    color: rgb(129, 201, 149);
+    white-space: normal;
+}
+
+.validation-label {
+    margin-top: 8px;
+    white-space: normal;
+}
+
+.validation-ok {
+    color: rgb(129, 201, 149);
+}
+
+.validation-error {
+    color: rgb(242, 139, 130);
+}
+
+.canvas-host {
+    min-height: 120px;
+}
+
+.nodes-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.nodes-list {
+    max-height: 360px;
+}
+
+.node-card {
+    margin-top: 8px;
+    padding: 8px;
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    background-color: rgb(24, 27, 34);
+}
+
+.node-card-selected {
+    border-color: rgb(138, 180, 248);
+}
+
+.node-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.node-title {
+    -unity-font-style: bold;
+}
+
+.runtime-log-list {
+    max-height: 140px;
+}

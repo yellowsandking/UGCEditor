@@ -1,0 +1,69 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:ScrollView name="main-scroll" class="main-scroll">
+        <ui:VisualElement class="header">
+            <ui:Label text="UGC 编辑器（C# / Unity Editor）" class="title" />
+            <ui:Label text="Prompt → DSL(JSON) → Validator → Visual Editor → Compiler → Runtime" class="subtitle" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="card">
+            <ui:Label text="① Prompt &amp; 模板生成" class="section-title" />
+            <ui:TextField name="prompt-field" multiline="true" class="multiline-field" />
+            <ui:VisualElement class="button-row">
+                <ui:Button name="generate-button" text="生成 DSL（离线模板）" />
+                <ui:Button name="clear-button" text="清空文档" />
+            </ui:VisualElement>
+            <ui:Label name="note-label" class="note-label" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="card">
+            <ui:Label text="② DSL（JSON）" class="section-title" />
+            <ui:TextField name="json-field" multiline="true" class="json-field" />
+            <ui:VisualElement class="button-row">
+                <ui:Button name="parse-json-button" text="解析 JSON 到文档" />
+                <ui:Button name="format-json-button" text="从文档格式化" />
+                <ui:Button name="save-json-button" text="下载 JSON 文件" />
+            </ui:VisualElement>
+            <ui:Label name="validation-label" class="validation-label" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="card">
+            <ui:Label text="③ 可视化编辑" class="section-title" />
+            <ui:Label text="元数据" class="subsection-title" />
+            <ui:TextField name="title-field" label="标题" />
+            <ui:TextField name="description-field" label="描述" />
+
+            <ui:Label text="画布" class="subsection-title" />
+            <ui:VisualElement class="field-row">
+                <uie:FloatField name="canvas-width-field" label="W" />
+                <uie:FloatField name="canvas-height-field" label="H" />
+                <ui:TextField name="canvas-background-field" label="背景" />
+            </ui:VisualElement>
+
+            <ui:Label text="画布预览（拖动）" class="subsection-title" />
+            <ui:VisualElement name="edit-canvas-host" class="canvas-host" />
+            <ui:Label text="在画布上拖动节点调整位置；点击空白取消选中。下方表单可精确修改属性。" class="hint" />
+
+            <ui:VisualElement class="nodes-header">
+                <ui:Label text="节点" class="subsection-title no-margin" />
+                <ui:VisualElement class="button-row no-top-margin">
+                    <ui:Button name="add-text-button" text="+ 文本" />
+                    <ui:Button name="add-rect-button" text="+ 矩形" />
+                    <ui:Button name="add-button-button" text="+ 按钮" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:ScrollView name="nodes-list" class="nodes-list" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="card">
+            <ui:Label text="④ 编译产物" class="section-title" />
+            <ui:TextField name="compiled-field" multiline="true" is-read-only="true" class="compiled-field" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="card">
+            <ui:Label text="⑤ 运行时预览" class="section-title" />
+            <ui:VisualElement name="runtime-canvas-host" class="canvas-host" />
+            <ui:Label text="运行时事件" class="subsection-title" />
+            <ui:ScrollView name="runtime-log-list" class="runtime-log-list" />
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>
