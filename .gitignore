@@ -1,0 +1,119 @@
+# =========================
+# Unity Generated Folders
+# =========================
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+UserSettings/
+
+# MemoryCaptures（Unity Profiler）
+MemoryCaptures/
+
+# =========================
+# Unity Cache
+# =========================
+Library/ArtifactDB
+Library/SourceAssetDB
+Library/ShaderCache
+Library/ScriptAssemblies
+
+# =========================
+# Addressables
+# =========================
+ServerData/
+
+# =========================
+# Visual Studio / Rider / VSCode
+# =========================
+.vs/
+.vscode/
+.idea/
+
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# JetBrains Rider
+.idea/
+
+# VSCode settings（可选）
+.vscode/*
+
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Build Files
+# =========================
+*.apk
+*.aab
+*.unitypackage
+*.app
+*.exe
+*.ipa
+
+# =========================
+# Crash Reports
+# =========================
+sysinfo.txt
+crashlytics-build.properties
+
+# =========================
+# Temporary Files
+# =========================
+*.tmp
+*.bak
+*.swp
+*.old
+
+# =========================
+# Addressables Build
+# =========================
+/Assets/StreamingAssets/aa/*
+
+# =========================
+# IL2CPP
+# =========================
+/Library/Il2cppBuildCache/
+
+# =========================
+# DOTS / Burst
+# =========================
+/Library/BurstCache/
+/Library/PackageCache/
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Ignore test coverage
+# =========================
+/coverage/
+
+# =========================
+# Do NOT ignore these
+# =========================
+!/[Aa]ssets/
+!/[Pp]ackages/
+!/[Pp]rojectSettings/
+
+# meta 文件必须保留
+!*.meta
